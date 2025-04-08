@@ -33,9 +33,6 @@ class GitConfigMissingError(GlobalIgnoreLoadError):
 
 
 def read_patterns_from_file(filepath):
-    # print("\nreading: %r" % filepath)
-    # print("isfile:", os.path.isfile(filepath))
-    # sys.stdout.flush()
     if not os.path.isfile(filepath):
         return []
     with open(filepath, 'r') as f:
@@ -65,13 +62,32 @@ def load_global_patterns():
 
     if isinstance(path, bytes):
         path = path.decode('utf-8')
-    # print("\n\ngit config path [1]:" + path + "\n")
     path = os.path.expanduser(path)
-    # print("\n\ngit config path [2]:" + path + "\n")
-    # sys.stdout.flush()
     return read_patterns_from_file(path)
 
 
 def load_repo_exclude_patterns(root_dir):
     exclude_path = os.path.join(root_dir, '.git', 'info', 'exclude')
     return read_patterns_from_file(exclude_path)
+
+
+def load_ignore_specs(root_dir, ignore_files):
+    spec_map = {}
+    for dirpath, dirnames, filenames in os.walk(root_dir):
+        patterns = []
+        for ignore_file in ignore_files:
+            ignore_path = os.path.join(dirpath, ignore_file)
+            patterns.extend(read_patterns_from_file(ignore_path))
+
+        # if this is the root dir, include repo-level patterns
+        if os.path.abspath(dirpath) == os.path.abspath(root_dir):
+            patterns.extend(load_repo_exclude_patterns(root_dir))
+            try:
+                patterns.extend(load_global_patterns())
+            except GlobalIgnoreLoadError:
+                pass
+
+        if patterns:
+            spec = PathSpec.from_lines(GitWildMatchPattern, patterns)
+            spec_map[dirpath] = spec
+    return spec_map
