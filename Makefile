@@ -31,6 +31,12 @@ test-27:
 	@ err -a bash -xc "export PYTHONPATH=$$(pwd)/src:$${PYTHONPATH} ; pytest -s -v tests"
 
 test-32:
+	@ err -a bash -cx "PYTHONPATH=$$(pwd)/src python3.2 -m pytest -s -v tests"
+
+test-39:
+	@ err -a bash -cx "PYTHONPATH=$$(pwd)/src python3.9 -m pytest -s -v tests"
+
+test-py3:
 	@ err -a bash -cx "PYTHONPATH=$$(pwd)/src python3 -m pytest -s -v tests"
 
 no-args noargs:
