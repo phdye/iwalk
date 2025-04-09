@@ -22,10 +22,15 @@ def iwalk(root_dir, ignore_files=IGNORE_FILENAMES, exclude_hidden=False):
 
 def is_ignored(path, spec_map):
     abs_path = os.path.abspath(path)
+    is_dir = os.path.isdir(abs_path)
     for ancestor in [abs_path] + get_ancestor_paths(abs_path):
         if ancestor in spec_map:
             rel_path = os.path.relpath(abs_path, ancestor)
+            # Try matching without a trailing slash.
             if spec_map[ancestor].match_file(rel_path):
+                return True
+            # For directories, also try matching with a trailing slash.
+            if is_dir and spec_map[ancestor].match_file(rel_path + os.sep):
                 return True
     return False
 

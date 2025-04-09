@@ -94,7 +94,7 @@ def test_iwalk_tree_no_args():
     )
     out, err = proc.communicate()
     assert proc.returncode == 0  # Now allowed to run with default '.'
-    assert "DEBUG" in out.decode("utf-8")
+    assert "DEBUG" in err.decode("utf-8")
 
 # Non-directory argument should produce error
 # @pytest.mark.skipif(sys.version_info < (3, 2), reason="subprocess capture requires Python 3")
@@ -138,13 +138,15 @@ def test_iwalk_tree_excludes_hidden():
         )
         out, err = proc.communicate()
         out = out.decode("utf-8")
+        err = err.decode("utf-8")
 
         assert ".hidden/"          in out
         assert ".ignoreme"     not in out
         assert "build.log"     not in out
         assert "temp.tmp"      not in out
-        assert "__pycache__/"  not in out
         assert ".keepme.txt"       in out
+        assert "[DEBUG]"           in err
+        assert "__pycache__/"  not in out
 
     finally:
         shutil.rmtree(temp_dir)

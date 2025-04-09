@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 import os
 import sys
 from iwalk import iwalk
@@ -17,7 +19,7 @@ If no <directory> is given, the current working directory (.) is used.
 """
 
 def print_tree(root, exclude_hidden):
-    print("[DEBUG] Walking directory: %s (exclude_hidden=%s)" % (root, exclude_hidden))
+    print("[DEBUG] Walking directory: %s (exclude_hidden=%s)" % (root, exclude_hidden), file=sys.stderr)
     for dirpath, dirnames, filenames in iwalk(root, exclude_hidden=exclude_hidden):
         level = dirpath.replace(root, '').count(os.sep)
         indent = '    ' * level
@@ -39,8 +41,8 @@ def main():
         if arg in ('-a', '--all'):
             include_hidden = True
         elif arg.startswith('-'):
-            print("Unknown option: %s" % arg)
-            print(USAGE)
+            print("Unknown option: %s" % arg, file=sys.stderr)
+            print(USAGE, file=sys.stderr)
             sys.exit(1)
         else:
             cleaned_args.append(arg)
@@ -52,7 +54,7 @@ def main():
     for root in cleaned_args:
         abs_root = os.path.abspath(root)
         if not os.path.isdir(abs_root):
-            print("Error: Not a directory: %s" % root)
+            print("Error: Not a directory: %s" % root, file=sys.stderr)
             sys.exit(1)
         print_tree(abs_root, exclude_hidden=not include_hidden)
 
