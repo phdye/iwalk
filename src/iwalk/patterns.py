@@ -39,7 +39,7 @@ def read_patterns_from_file(filepath):
         lines = []
         for line in f.read().splitlines():
             line = line.strip()
-            if not line or line.strip().startswith('#'):
+            if not line or line.startswith('#'):
                 continue
             if sys.version_info[0] < 3:
                 line = line.decode('utf-8')
