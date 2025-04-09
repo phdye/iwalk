@@ -1,0 +1,39 @@
+### Developer Note: Handling `.keepme.txt` and Negated Patterns in Tests
+
+The test `test_iwalk_tree_excludes_hidden()` verifies that the iwalk CLI correctly applies hidden-file and `.gitignore`-based filtering during traversal. A specific assertion checks for the presence of `.keepme.txt` as an explicitly *unignored* file via the negated pattern `!.keepme.txt`.
+
+However, this check fails by default unless the CLI is instructed to include hidden files.
+
+#### ⚠ Why It Fails Without `--all`
+
+By default, `iwalk-tree.py` calls `walk(..., exclude_hidden=True)`. This means:
+- Files like `.keepme.txt` (dotfiles) are excluded before `.gitignore` patterns are evaluated.
+- Even if `.keepme.txt` is *not* matched by a prior ignore rule, and *is* negated by `!.keepme.txt`, it will still be excluded unless `exclude_hidden=False`.
+
+This mimics how Git behavior only considers patterns *after* visibility rules are resolved.
+
+#### ✅ The Fix
+
+To ensure `.keepme.txt` is included:
+- Call the script with the `--all` or `-a` option to allow hidden files.
+- Example in test:
+  ```python
+  [sys.executable, script, "--all", temp_dir]
+  ```
+
+This ensures that `.keepme.txt` is *not* filtered out as hidden and that `!.keepme.txt` can correctly re-include it.
+
+#### 🔍 Test Fixture Details
+
+- `.keepme.txt` is created in the root directory.
+- The `.gitignore` also resides in the root and includes:
+  ```
+  *.log
+  *.tmp
+  __pycache__/
+  .ignoreme
+  !.keepme.txt
+  ```
+
+This setup is deliberate to test the interaction between negated patterns and hidden file logic.
+
