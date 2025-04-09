@@ -54,7 +54,6 @@ def create_tree(root):
     build(root, structure)
 
 
-@pytest.mark.skipif(sys.version_info < (3, 2), reason="subprocess capture requires Python 3")
 # Basic output test against the full tree structure with ignore rules applied
 def test_iwalk_tree_output():
     temp_dir = tempfile.mkdtemp()
@@ -98,7 +97,7 @@ def test_iwalk_tree_no_args():
     assert "DEBUG" in out.decode("utf-8")
 
 # Non-directory argument should produce error
-@pytest.mark.skipif(sys.version_info < (3, 2), reason="subprocess capture requires Python 3")
+# @pytest.mark.skipif(sys.version_info < (3, 2), reason="subprocess capture requires Python 3")
 def test_iwalk_tree_with_file_arg():
     temp_dir = tempfile.mkdtemp()
     try:
@@ -122,8 +121,8 @@ def test_iwalk_tree_with_file_arg():
         shutil.rmtree(temp_dir)
 
 
-# Hidden files should not appear if exclude_hidden=True is honored in walk()
-@pytest.mark.skipif(sys.version_info < (3, 2), reason="subprocess capture requires Python 3")
+# Hidden files should not appear if exclude_hidden=True is honored in iwalk()
+# @pytest.mark.skipif(sys.version_info < (3, 2), reason="subprocess capture requires Python 3")
 def test_iwalk_tree_excludes_hidden():
     temp_dir = tempfile.mkdtemp()
     try:

@@ -3,7 +3,7 @@ from iwalk.patterns import load_ignore_specs
 
 IGNORE_FILENAMES = ['.gitignore', '.dockerignore', '.ignore']
 
-def walk(root_dir, ignore_files=IGNORE_FILENAMES, exclude_hidden=False):
+def iwalk(root_dir, ignore_files=IGNORE_FILENAMES, exclude_hidden=False):
     root_dir = os.path.abspath(root_dir)
     spec_map = load_ignore_specs(root_dir, ignore_files)
 

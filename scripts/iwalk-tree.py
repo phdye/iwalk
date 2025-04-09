@@ -3,7 +3,7 @@
 
 import os
 import sys
-from iwalk import walk
+from iwalk import iwalk
 
 USAGE = """Usage:
   iwalk-tree.py [options] <directory>...
@@ -18,7 +18,7 @@ If no <directory> is given, the current working directory (.) is used.
 
 def print_tree(root, exclude_hidden):
     print("[DEBUG] Walking directory: %s (exclude_hidden=%s)" % (root, exclude_hidden))
-    for dirpath, dirnames, filenames in walk(root, exclude_hidden=exclude_hidden):
+    for dirpath, dirnames, filenames in iwalk(root, exclude_hidden=exclude_hidden):
         level = dirpath.replace(root, '').count(os.sep)
         indent = '    ' * level
         print("%s%s/" % (indent, os.path.basename(dirpath) or root))

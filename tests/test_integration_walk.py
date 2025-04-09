@@ -5,7 +5,7 @@ import tempfile
 import shutil
 import pytest
 
-from iwalk import walk
+from iwalk import iwalk
 
 
 def create_file(path, content=""):
@@ -36,7 +36,7 @@ def test_full_walk_with_mixed_ignore():
         create_file(os.path.join(temp_dir, "tests", "test_example.py"))
         create_file(os.path.join(temp_dir, "tests", "ignored_test.py"))
 
-        result = list(walk(temp_dir, exclude_hidden=True))
+        result = list(iwalk(temp_dir, exclude_hidden=True))
 
         seen = set()
         for _, _, files in result:
