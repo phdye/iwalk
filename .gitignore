@@ -1,2 +1,9 @@
 /.cache
 /?
+/HOLD
+/OTHER
+/TOX
+/PATCH
+/.virtenv
+/.toxenv
+/.tox

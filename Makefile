@@ -50,9 +50,14 @@ cx clear-errors:
 clean:
 	@ echo "Cleaning up..."
 	rm -f env.json vars.json $(ERRORS) .errors.*
+	rm -rf build dist
 	find . -name '*.pyc'               -delete
 	find . -name '__pycache__'         | xargs rm -rf
 	find . -name '*.egg-info'          | xargs rm -rf
+
+dist-clean: clean
+	@ echo "Cleaning up..."
+	rm -rf build dist
 
 tar: clean
 	( cd .. ; tar cvfJ /dn/${NAME}.tar.xz --exclude="*/__pycache__" ${NAME}/${FILES} )
