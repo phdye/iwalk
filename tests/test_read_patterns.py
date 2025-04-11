@@ -5,6 +5,11 @@ import tempfile
 import shutil
 import pytest
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 from iwalk.patterns import read_patterns_from_file
 
 
@@ -56,10 +61,11 @@ def test_unicode_and_whitespace():
     ignore_file, temp_dir = create_temp_ignore_file(contents)
     try:
         patterns = read_patterns_from_file(ignore_file)
-        expected_unicode = b"\u0442\u0435\u0441\u0442.txt".decode("unicode_escape")
+        expected_unicode = b"\\u0442\\u0435\\u0441\\u0442.txt".decode("unicode_escape")
         assert patterns == ["spaced.txt", expected_unicode]
     finally:
         remove_temp_dir(temp_dir)
+
 
 def test_missing_file_returns_empty():
     missing_path = "/nonexistent/.gitignore"

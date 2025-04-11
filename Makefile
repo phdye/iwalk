@@ -1,5 +1,7 @@
 NAME = iwalk
-FILES={Makefile,setup.py,tox.ini,src,tests}
+FILES={Makefile,setup.py,src,tests}
+
+# ,scripts/mk-toxenv,tox.ini,.toxenv}
 
 PYTHON = python3
 TEST_DIR = tests
@@ -47,9 +49,10 @@ cx clear-errors:
 
 clean:
 	@ echo "Cleaning up..."
-	find . -name '*.pyc' -delete
-	find . -name '__pycache__' -delete
-	rm -f env.json vars.json $(ERRORS)
+	rm -f env.json vars.json $(ERRORS) .errors.*
+	find . -name '*.pyc'               -delete
+	find . -name '__pycache__'         | xargs rm -rf
+	find . -name '*.egg-info'          | xargs rm -rf
 
 tar: clean
 	( cd .. ; tar cvfJ /dn/${NAME}.tar.xz --exclude="*/__pycache__" ${NAME}/${FILES} )

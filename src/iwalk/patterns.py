@@ -4,8 +4,8 @@ import os
 import subprocess
 import errno
 
-from pathspec import PathSpec
-from pathspec.patterns.gitwildmatch import GitWildMatchPattern
+from iwalk.vendor.pathspec import PathSpec
+from iwalk.vendor.pathspec.patterns.gitwildmatch import GitWildMatchPattern
 
 IGNORE_FILENAMES = ['.gitignore', '.dockerignore', '.ignore']
 

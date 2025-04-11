@@ -1,3 +1,54 @@
 .
 ├── Makefile
-└── stree.py
+├── setup.py
+├── src
+│   ├── iwalk
+│   │   ├── __init__.py
+│   │   ├── core.py
+│   │   ├── patterns.py
+│   │   └── vendor
+│   │       ├── docopt.py
+│   │       ├── iwalk.py
+│   │       ├── pathlib.py
+│   │       ├── pathspec
+│   │       │   ├── __init__.py
+│   │       │   ├── compat.py
+│   │       │   ├── gitignore.py
+│   │       │   ├── pathspec.py
+│   │       │   ├── pattern.py
+│   │       │   ├── patterns
+│   │       │   │   ├── __init__.py
+│   │       │   │   └── gitwildmatch.py
+│   │       │   ├── tests
+│   │       │   │   ├── __init__.py
+│   │       │   │   ├── test_gitignore.py
+│   │       │   │   ├── test_pathspec.py
+│   │       │   │   └── test_util.py
+│   │       │   └── util.py
+│   │       ├── typing.py
+│   │       └── typing_extensions.py
+│   └── iwalk.egg-info
+│       ├── PKG-INFO
+│       ├── SOURCES.txt
+│       ├── dependency_links.txt
+│       └── top_level.txt
+└── tests
+    ├── __pycache__
+    │   ├── test_backwards_compatibility.cpython-32-PYTEST.pyc
+    │   ├── test_global_patterns.cpython-32-PYTEST.pyc
+    │   ├── test_ignore_checker.cpython-32-PYTEST.pyc
+    │   ├── test_ignore_specs.cpython-32-PYTEST.pyc
+    │   ├── test_integration_walk.cpython-32-PYTEST.pyc
+    │   ├── test_iwalk_tree_cli.cpython-32-PYTEST.pyc
+    │   ├── test_read_patterns.cpython-32-PYTEST.pyc
+    │   ├── test_repo_exclude.cpython-32-PYTEST.pyc
+    │   └── test_walk.cpython-32-PYTEST.pyc
+    ├── test_backwards_compatibility.py
+    ├── test_global_patterns.py
+    ├── test_ignore_checker.py
+    ├── test_ignore_specs.py
+    ├── test_integration_walk.py
+    ├── test_iwalk_tree_cli.py
+    ├── test_read_patterns.py
+    ├── test_repo_exclude.py
+    └── test_walk.py

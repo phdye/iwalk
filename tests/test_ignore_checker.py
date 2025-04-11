@@ -6,8 +6,8 @@ import shutil
 import pytest
 
 from iwalk.patterns import load_ignore_specs
-from pathspec import PathSpec
-from pathspec.patterns.gitwildmatch import GitWildMatchPattern
+from iwalk.vendor.pathspec import PathSpec
+from iwalk.vendor.pathspec.patterns.gitwildmatch import GitWildMatchPattern
 
 
 def create_file(path, content=""):
